@@ -1,0 +1,31 @@
+# Takeaways
+- Data Structures: Organixing Data for Efficiency
+  - Record: stores subitems (field) with name associated with ea subitem
+  - Array: stored ordered list of items, each item is directly accessible by positional index
+  - Linked list: data sture that stores an ordered list of nodes, each node stores and data and has pointer to next node
+  - Binary Tree: each node stores data and has up to two childeren (left, right)
+  - Hash Table: stores unordere items by mapping (hashing) each item to location in array
+  - Max-Heap: tree that maintains simple property that node's key is greater than or equal to node's childrens' keys
+  - Min-Heap: tree that maintains that node's key is less than or equal to childrens'
+  - Graph: represention connections among items and consists of vertices connected by edges
+    - Vertex: item in graph
+    - Edge: connection between two vertices in graph
+  - Importance: Efficiency, Versatility, Problem Solving
+- Algorithm: specified simple instructions to solve problem
+  - Precision, Efficiency, Universality, Problem Solving
+  - NP-Complete: no discovered swift solution, unconfortable to find fast solution
+- Abstract Data Types (ADTs)
+  - List: holding ordered data (array, linked list)
+  - Dynamic array: holding ordered data and allowing indexed access (array)
+  - Stack: items are insterted or removed from top of stack
+  - Queue: items are inserted at end and removed from front
+  - Set: collection of distinct items (binary search tree, hash table)
+  - Keys of ADT: Encapsulation, Operations, Versatility, Consistency
+ 
+# Comments / Questions
+- How efficient is python compared to other programming languages?
+- Does the database matter as long as you put it in a good data structure?
+- In what real life example is a linked list actually useful?
+- Isn't a set a list of lists what makes it different?
+- If we were to make a data structure from scratch, what would that look like?
+  - What is actually being encapsulated in ADTs?
