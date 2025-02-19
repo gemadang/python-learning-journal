@@ -1,0 +1,12 @@
+sale_id,sale_date,amount,product
+0,2024-01-15,150.00,Widget
+1,2024-02-20,200.50,Gadget
+2,2024-03-12,99.99,Thingamajig
+3,2024-04-25,250.75,Doohickey
+4,2024-05-10,125.30,Widget
+5,2024-06-15,300.00,Gadget
+6,2024-07-20,175.25,Thingamajig
+7,2024-08-30,99.99,Doohickey
+8,2024-09-05,220.10,Widget
+9,2024-10-12,199.99,Gadget
+9,2024-10-12,199.99,Gadget
