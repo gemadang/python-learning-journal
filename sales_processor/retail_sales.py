@@ -26,7 +26,8 @@ import csv
 import random
 from datetime import datetime, date
 import unittest
-
+import time
+import matplotlib.pyplot as plt
 
 '''
     Sales Data Manager class
@@ -91,7 +92,6 @@ class SalesDataManager:
 
         #add sale data to map
         self.sale_id_map[sale_id] = row
-
 
     def get_sale(self, sale_id):
         sale_id = int(sale_id)
@@ -165,7 +165,6 @@ class SalesDataManager:
     def generate_product(self):
         return random.choice(['Widget', 'Gadget', 'Thingamajig', 'Doohickey', 'Kazoobob'])
 
-
 '''
     Retail Company class 
 
@@ -187,6 +186,58 @@ class RetailCompany:
 
     def find_sale(self, sale_id):
         return self.sales_data_manager.get_sale(sale_id)
+
+
+# class SalesDataManagerPerformance:
+#     def __init__(self, n):
+#         self.n = n
+#         self.manager = None
+
+#     def measure_init():
+#         start = time.time()
+#         self.manager = SalesDataManager(n)
+#         load_duration = time.time() - start
+#         return load_duration
+
+#      def measure_latest_sale():
+#         start = time.time()
+#         self.manager.get_latest_sale()
+#         load_duration = time.time() - start
+#         return load_duration    
+
+def measure_performance(dataset_sizes):
+    load_times = []
+    latest_sale_times = []
+    total_revenue_times = []
+    search_sale_times = []
+    
+    for n in dataset_sizes:
+        # initialize manager
+        start = time.time()
+        manager = SalesDataManager(n)
+        load_duration = time.time() - start
+        load_times.append(load_duration)
+        
+        #get latest sale
+        start = time.time()
+        manager.get_latest_sale()
+        latest_duration = time.time() - start
+        latest_sale_times.append(latest_duration)
+        
+        #revenue
+        start = time.time()
+        manager.sum_amounts()
+        revenue_duration = time.time() - start
+        total_revenue_times.append(revenue_duration)
+        
+        #get sale id
+        sale_id = n - 1
+        start = time.time()
+        manager.get_sale(sale_id)
+        search_duration = time.time() - start
+        search_sale_times.append(search_duration)
+    
+    return load_times, latest_sale_times, total_revenue_times, search_sale_times
 
 class TestRetailCompany(unittest.TestCase):
     def setUp(self):
@@ -221,6 +272,25 @@ class TestRetailCompany(unittest.TestCase):
         self.assertIsNotNone(self.xlarge_retail_company.latest_sale())
 
 if __name__ == "__main__":
+
+    # Define dataset sizes.
+    sizes = [100, 1000, 10000, 100000]
+
+    # Run the performance measurements.
+    load, latest, revenue, search = measure_performance(sizes)
+
+    # Plotting the results.
+    plt.plot(sizes, load, marker='o', label='Load Sales Data')
+    plt.plot(sizes, latest, marker='o', label='Get Latest Sale')
+    plt.plot(sizes, revenue, marker='o', label='Compute Total Revenue')
+    plt.plot(sizes, search, marker='o', label='Search Sale by ID')
+    plt.xlabel('Number of Records')
+    plt.ylabel('Time (seconds)')
+    plt.title('Performance Measurements for Sales Operations')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
     unittest.main()
 
 '''
