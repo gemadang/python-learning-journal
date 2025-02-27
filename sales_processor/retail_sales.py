@@ -239,6 +239,21 @@ def measure_performance(dataset_sizes):
     
     return load_times, latest_sale_times, total_revenue_times, search_sale_times
 
+def plot_performance():
+    sizes = [100, 1000, 10000, 100000]
+    load, latest, revenue, search = measure_performance(sizes)
+
+    plt.plot(sizes, load, marker='o', label='init sales data manager')
+    plt.plot(sizes, latest, marker='o', label='latest sale func')
+    plt.plot(sizes, revenue, marker='o', label='total revenue func')
+    plt.plot(sizes, search, marker='o', label='get sale id func')
+    plt.xlabel('Number of Records')
+    plt.ylabel('Time (seconds)')
+    plt.title('Performance Measurements for Sales Operations')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
 class TestRetailCompany(unittest.TestCase):
     def setUp(self):
         self.small_sales_data_manager = SalesDataManager(100)
@@ -272,26 +287,17 @@ class TestRetailCompany(unittest.TestCase):
         self.assertIsNotNone(self.xlarge_retail_company.latest_sale())
 
 if __name__ == "__main__":
+    #performance of functions
+    # plot_performance()
 
-    # Define dataset sizes.
-    sizes = [100, 1000, 10000, 100000]
+    sales_data_manager = SalesDataManager(100)
+    retail = RetailCompany(sales_data_manager)
 
-    # Run the performance measurements.
-    load, latest, revenue, search = measure_performance(sizes)
+    print('latest sale', retail.latest_sale())
+    print('total revenue', retail.total_revenue())
+    print('find sale', retail.find_sale(99))
 
-    # Plotting the results.
-    plt.plot(sizes, load, marker='o', label='init sales data manager')
-    plt.plot(sizes, latest, marker='o', label='latest sale func')
-    plt.plot(sizes, revenue, marker='o', label='total revenue func')
-    plt.plot(sizes, search, marker='o', label='get sale id func')
-    plt.xlabel('Number of Records')
-    plt.ylabel('Time (seconds)')
-    plt.title('Performance Measurements for Sales Operations')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-
-    unittest.main()
+    # unittest.main()
 
 '''
 Reflection
