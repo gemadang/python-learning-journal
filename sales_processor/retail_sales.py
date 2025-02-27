@@ -280,10 +280,10 @@ if __name__ == "__main__":
     load, latest, revenue, search = measure_performance(sizes)
 
     # Plotting the results.
-    plt.plot(sizes, load, marker='o', label='Load Sales Data')
-    plt.plot(sizes, latest, marker='o', label='Get Latest Sale')
-    plt.plot(sizes, revenue, marker='o', label='Compute Total Revenue')
-    plt.plot(sizes, search, marker='o', label='Search Sale by ID')
+    plt.plot(sizes, load, marker='o', label='init sales data manager')
+    plt.plot(sizes, latest, marker='o', label='latest sale func')
+    plt.plot(sizes, revenue, marker='o', label='total revenue func')
+    plt.plot(sizes, search, marker='o', label='get sale id func')
     plt.xlabel('Number of Records')
     plt.ylabel('Time (seconds)')
     plt.title('Performance Measurements for Sales Operations')
@@ -300,17 +300,27 @@ After running your pipeline with different input sizes, consider the following:
 Performance Trends:
 
 How does each operation's execution time change as the dataset grows?
-All are O(n) except finding the sale
+each operation happens in O(1) time given that i preprocessed the data in the sales data manager
 
 Do the results align with the theoretical Big O expectations?
-yes
+the theoretical big o notations for
+checking duplicates: O(n)
+retrieving the latest sale: O(n) - unless you have a list sorted witt the latest sale at the end you can access as O(1)
+getting the id: O(n) - unless you have a map and you can access the id it would be O(1)
+computing the total revenue would also be - O(n)
+
+so the results align well because you can see as there are more records, 
+creating the sales data manager the time it takes grows as well, so i handle all the preprocessing there
+and that's why using the functions are faster than the theoretical
+
 Real-World Implications:
 
 Which steps might become bottlenecks in a production system processing millions of records?
-the duplication steps i made 
+the bottlenecks would be initializing and loading the data, and if there are a lot of duplicates then 
+that's extra time processing those duplicates
 
 How would you optimize or replace the inefficient (quadratic) approach?
-for the duplicates if you compare each sale with one anohter for not jsut the sasle id but other data variables you might have to create different maps
+i'm not sure which part of the problem would have a quadratic approach
 
 Practical Adjustments:
 
