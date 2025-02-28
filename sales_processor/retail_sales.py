@@ -45,9 +45,10 @@ class SalesDataManager:
         self.max_date = datetime(1,1,1)
         self.latest_sales = []
         self.duplicates = []
+        self.duplicate_map = {}
     
         if type(n) is int:
-            self.synthesize_data(n)
+            self.synthesize_data(n) #O(n)
         elif type(n) is str:
             # deconstruct full path
             full_path = self.deconstruct_full_path(n)
@@ -55,7 +56,7 @@ class SalesDataManager:
                 #load csv file
                 with open(full_path, 'r', newline='') as file:
                     csv_file = csv.DictReader(file)
-                    for lines in csv_file:
+                    for lines in csv_file: #O(n)
                         self.add_sale_to_map(lines)                    
             except csv.Error:
                 print('CSV file not found')
@@ -63,7 +64,8 @@ class SalesDataManager:
         #get biggest id number 
         max_id = max(list(self.sale_id_map))
         #add duplicates with new ids
-        for i, dupe in enumerate(self.duplicates):
+        for i, dupe in enumerate(self.duplicates): #worst case if all ids are duplicates O(n)
+            dupe['old_sale_id'] = dupe['sale_id']
             dupe['sale_id'] = str(max_id+i+1)
             self.add_sale_to_map(dupe)
 
@@ -88,7 +90,15 @@ class SalesDataManager:
         # everytime data is loaded in, check for duplicates 
         # duplicate will be included at the as new ids 
         if sale_id in self.sale_id_map: # means there is a duplicate
+            #add to list that will add at the end
             self.duplicates.append(row)
+
+            #add to map which we will use to print out a map of duplicates
+            #alreay duplicates
+            if sale_id in self.duplicate_map:
+                self.duplicate_map[sale_id].append(row)
+            else: #not in map yet
+                self.duplicate_map[sale_id] = [self.sale_id_map[sale_id], row]
 
         #add sale data to map
         self.sale_id_map[sale_id] = row
@@ -106,6 +116,12 @@ class SalesDataManager:
             amount = float(self.sale_id_map[sale]['amount'])
             total_amount += amount
         return "{:.2f}".format(round(total_amount,2))
+
+    def check_duplicates(self):
+        return len(self.duplicates) > 0
+    
+    def get_duplicates(self):
+        return self.duplicate_map
 
     def deconstruct_full_path(self, full_path):
         #file name (# of items)_sales_data_(datetime created)
@@ -186,6 +202,12 @@ class RetailCompany:
 
     def find_sale(self, sale_id):
         return self.sales_data_manager.get_sale(sale_id)
+    
+    def has_duplicate_sales(self):
+        return self.sales_data_manager.check_duplicates()
+
+    def get_duplicate_sales(self):
+        return self.sales_data_manager.get_duplicates()
 
 
 # class SalesDataManagerPerformance:
@@ -210,6 +232,8 @@ def measure_performance(dataset_sizes):
     latest_sale_times = []
     total_revenue_times = []
     search_sale_times = []
+    check_dupe_times = []
+    get_dupe_times = []
     
     for n in dataset_sizes:
         # initialize manager
@@ -236,17 +260,31 @@ def measure_performance(dataset_sizes):
         manager.get_sale(sale_id)
         search_duration = time.time() - start
         search_sale_times.append(search_duration)
+        
+        #check duplicates
+        start = time.time()
+        manager.check_duplicates()
+        check_dupe_duration = time.time() - start
+        check_dupe_times.append(check_dupe_duration)
+
+        #get duplicates
+        start = time.time()
+        manager.get_duplicates()
+        get_dupe_duration = time.time() - start
+        get_dupe_times.append(get_dupe_duration)
     
-    return load_times, latest_sale_times, total_revenue_times, search_sale_times
+    return load_times, latest_sale_times, total_revenue_times, search_sale_times, check_dupe_times, get_dupe_times
 
 def plot_performance():
     sizes = [100, 1000, 10000, 100000]
-    load, latest, revenue, search = measure_performance(sizes)
+    load, latest, revenue, search, check_duplicates, get_duplicates = measure_performance(sizes)
 
     plt.plot(sizes, load, marker='o', label='init sales data manager')
     plt.plot(sizes, latest, marker='o', label='latest sale func')
     plt.plot(sizes, revenue, marker='o', label='total revenue func')
     plt.plot(sizes, search, marker='o', label='get sale id func')
+    plt.plot(sizes, check_duplicates, marker='o', label='check duplicates')
+    plt.plot(sizes, get_duplicates, marker='o', label='get duplicates')
     plt.xlabel('Number of Records')
     plt.ylabel('Time (seconds)')
     plt.title('Performance Measurements for Sales Operations')
@@ -286,9 +324,15 @@ class TestRetailCompany(unittest.TestCase):
         self.assertIsNotNone(self.large_retail_company.latest_sale())
         self.assertIsNotNone(self.xlarge_retail_company.latest_sale())
 
+    def test_check_duplicates(self):
+        self.assertIsNotNone(self.small_retail_company.has_duplicate_sales())
+        self.assertIsNotNone(self.medium_retail_company.has_duplicate_sales())
+        self.assertIsNotNone(self.large_retail_company.has_duplicate_sales())
+        self.assertIsNotNone(self.xlarge_retail_company.has_duplicate_sales())
+
 if __name__ == "__main__":
     #performance of functions
-    # plot_performance()
+    plot_performance()
 
     sales_data_manager = SalesDataManager(100)
     retail = RetailCompany(sales_data_manager)
@@ -296,8 +340,10 @@ if __name__ == "__main__":
     print('latest sale', retail.latest_sale())
     print('total revenue', retail.total_revenue())
     print('find sale', retail.find_sale(99))
+    print('has duplicates', retail.has_duplicate_sales())
+    print('get duplicates', retail.get_duplicate_sales())
 
-    # unittest.main()
+    unittest.main()
 
 '''
 Reflection
