@@ -25,7 +25,8 @@ class Player():
         self.playTurns = 0
 
     def takeTurn(self, previousCard=False):
-        print(self.name + ' Turn: ')
+
+        print(self.name + ' Turn ' + str(self.playTurns + 1) + ': ')
 
         choice = ''
         while (choice != 'pass' and not self.exploded):
@@ -35,6 +36,7 @@ class Player():
 
             choice = input('Type one number of the card you want to play or type \'pass\' to end turn: ')
             if choice == 'pass':
+                print('To pass, player will draw a card')
                 self.drawCard()
                 break
             elif choice.isnumeric() and int(choice) <= self.hand.size: #todo: add validation for too big of a number
@@ -52,18 +54,19 @@ class Player():
         card.play()
         return False
 
-    def drawCard(self, print=True): #add card into hand
+    def drawCard(self, printLog=True): #add card into hand
         card = self.drawPile.removeCard()
         if card:
-            print(self.name + ' has drawn a ...')
+            if printLog:
+                print(self.name + ' has drawn a ...')
             if isinstance(card, ExplodingKittenCard):
                 print('AN EXPLODING KITTEN CARD! OH NO!\n')
                 if self.hand.defuses > 0:
-                    print('Thankfully you have a Defuse Card! So we can use it and insert the exploding card back into the deck')
-                    choice = input('Type one number between 1 and ' + str(len(self.drawPile)) + ' of the position you want to insert the exploding kitten or type \'random\': ')
+                    print('Thankfully you have ' + self.hand.defuses + ' Defuse Cards! So we can use one and insert the exploding card back into the deck')
+                    choice = input('Type one number between 1 and ' + str(self.drawPile.size) + ' of the position you want to insert the exploding kitten or type \'random\': ')
                     if choice.isnumeric() and int(choice) <= self.hand.size: #todo: add validation for too big of a number
                         self.hand.removeCard() # removes the first card which will be the card that you most recently drawn
-                        self.drawPile.addCardAt(cardNumber - 1)
+                        self.drawPile.addCardAt(card, int(choice) - 1)
                     elif choice == 'random':
                         self.drawPile.insertRandomExplodingKitten()
                     else:
@@ -72,8 +75,8 @@ class Player():
                     self.exploded = True
                     print('Unfortunately you have no more Defuse cards')
             else:
-                if isinstance(card, DefuseCard):
-                    self.hand.defuses += 1
+                if printLog:
+                    print(card.name + '\n')
                 self.hand.addCard(card)
 
 class LinkedCards():
@@ -167,6 +170,29 @@ class Hand(LinkedCards):
         self.size = 1
         self.iditer = 1
         self.defuses = 1
+    
+    def addCard(self,card):
+        super().addCard(card)
+        if isinstance(card, DefuseCard):
+            self.defuses += 1
+
+    def addCardAt(self, card, addIndex):
+        super().addCardAt(card, addIndex)
+        if isinstance(card, DefuseCard):
+            self.defuses += 1
+
+    def removeCard(self):
+        card = super().removeCard()
+        if isinstance(card, DefuseCard):
+            self.defuses -= 1
+        return card
+
+    def removeCardAt(self, removeIndex):
+        card = super().removeCardAt(removeIndex)
+        if isinstance(card, DefuseCard):
+            self.defuses -= 1
+        return card
+        
 
 class DiscardPile(LinkedCards):
     def __init__(self, *args):
@@ -179,7 +205,7 @@ class DiscardPile(LinkedCards):
 
 class DrawPile(LinkedCards):
     def __init__(self, *args):
-        super().__init__(0,8,11,11,11,11,5)
+        super().__init__(0,8,11,11,11,11,11)
         self.create()
 
     def create(self):
@@ -203,6 +229,7 @@ class DrawPile(LinkedCards):
         for card in totalList:
             super().addCard(card)
 
+
     def shuffle(self):
         randomCardList = self.getCardList()
         random.shuffle(randomCardList)
@@ -224,10 +251,10 @@ class DrawPile(LinkedCards):
         return peekList
 
     def insertRandomExplodingKitten(self):
-        randonIndex = random.randint(0, self.size+1)
+        randIndex = random.randint(0, self.size-1)
         index = 0
         current = self.head
-        while index < randonIndex and current:
+        while index < randIndex and current:
             current = current.next
             index += 1
 
@@ -253,6 +280,10 @@ class ExplodingKittenCard(Card):
 class DefuseCard(Card):
     def __init__(self, *args):
         super().__init__('defuse', 'Defuse')
+    
+    def play(self):
+        super().play()
+        print('How silly to play this card! Its a useful protection card but you play what you want to play...')
 
 class CatCard(Card):
     def __init__(self, *args):
@@ -332,7 +363,7 @@ class ExplodingKittensXtremeGame():
             if self.playerOne.exploded:
                 self.gameOn = False
                 print(self.playerTwo.name + ' wins!')
-                print('/n')
+                print('\n')
                 self.askToPlayGame('again')
                 break
 
