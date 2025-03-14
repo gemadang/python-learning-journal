@@ -1,19 +1,8 @@
-''' GAME RULES
-
-There are 77 cards in total. 
-    - 2 Exploding Kitten Cards
-    - 6 Defuse Cards
-    - 8 Nope Cards
-    - 7 Attack Cards
-    - 7 Skip Cards
-    - 7 Favor Cards
-    - 7 Shuttle Cards
-    - 8 See the Future Cards
-    - 25 Cat Cards (5 of each of the following: TacoCat, )
-
-'''
-
 import random
+
+def game_log(txt):
+    with open('log.txt', 'a') as file: 
+        file.write(txt + '\n')  # This will be added at the end
 
 class Player():
     def __init__(self, name, drawPile, discardPile):
@@ -22,24 +11,28 @@ class Player():
         self.discardPile = discardPile
         self.hand = Hand()
         self.exploded = False
-        self.playTurns = 0
+        self.playTurns = 1
 
     def takeTurn(self, previousCard=False):
 
-        print(self.name + ' Turn ' + str(self.playTurns + 1) + ': ')
+        player_turn_print = self.name + ' Turn ' + str(self.playTurns) + ': '
+        print(player_turn_print)
+        game_log(player_turn_print)
 
         choice = ''
         while (choice != 'pass' and not self.exploded):
             
             print('Here are your cards: ')
             self.hand.printNumberedCards()
-
             choice = input('Type one number of the card you want to play or type \'pass\' to end turn: ')
             if choice == 'pass':
                 print('To pass, player will draw a card')
+                game_log(self.name + ' chose to pass and draw card')
                 self.drawCard()
+                self.playTurns += 1
                 break
             elif choice.isnumeric() and int(choice) <= self.hand.size: #todo: add validation for too big of a number
+                game_log(self.name + ' chose to play card')
                 self.turnPlay(int(choice))
             else:
                 print('Wrong Input... Please try again. \n')
@@ -47,10 +40,9 @@ class Player():
     def turnPlay(self, cardNumber):
         card = self.hand.removeCardAt(cardNumber - 1)
         self.discardPile.addCard(card)
-
         print('Adding to Discard Pile...')
+        game_log(self.name + ' chose to play ' + card.name + ' and is added to discard pile')
         self.discardPile.printNumberedCards()
-        self.playTurns += 1
         card.play()
         return False
 
@@ -59,25 +51,37 @@ class Player():
         if card:
             if printLog:
                 print(self.name + ' has drawn a ...')
+                game_log(self.name + ' has drawn a ' + card.name)
             if isinstance(card, ExplodingKittenCard):
                 print('AN EXPLODING KITTEN CARD! OH NO!\n')
                 if self.hand.defuses > 0:
-                    print('Thankfully you have ' + self.hand.defuses + ' Defuse Cards! So we can use one and insert the exploding card back into the deck')
-                    choice = input('Type one number between 1 and ' + str(self.drawPile.size) + ' of the position you want to insert the exploding kitten or type \'random\': ')
-                    if choice.isnumeric() and int(choice) <= self.hand.size: #todo: add validation for too big of a number
-                        self.hand.removeCard() # removes the first card which will be the card that you most recently drawn
-                        self.drawPile.addCardAt(card, int(choice) - 1)
-                    elif choice == 'random':
-                        self.drawPile.insertRandomExplodingKitten()
-                    else:
-                        print('Wrong Input... Please try again. \n')
+                    print('Thankfully you have ' + str(self.hand.defuses) + ' Defuse Card(s)! So we can use one and insert the exploding card back into the deck')
+                    choice_selected = False
+                    while not choice_selected:
+                        choice = input('Type one number between 1 and ' + str(self.drawPile.size) + ' of the position you want to insert the exploding kitten or type \'random\': ')
+                        if choice.isnumeric() and int(choice) <= self.hand.size: #todo: add validation for too big of a number
+                            game_log(self.name + ' has ' + str(self.hand.defuses) + ' Defuse Card(s). And has placed an exploding kitten in position ' + str(choice) + ' of the draw pile')
+                            self.hand.removeCard() # removes the first card which will be the card that you most recently drawn
+                            self.drawPile.addCardAt(card, int(choice) - 1)
+                            #also need to remove defuse card from hand to use
+                            defused = self.hand.removeFirstDefuse()
+                            self.discardPile.addCard(defused) #add used card to discardpile
+                            choice_selected = True
+                        elif choice == 'random':
+                            game_log(self.name + ' has ' + str(self.hand.defuses) + ' Defuse Card(s). And has placed an exploding kitten in a random position  of the draw pile')
+                            self.drawPile.insertRandomExplodingKitten()
+                            choice_selected = True
+                        else:
+                            print('You have inputed: ' + choice + '. This is the wrong Input... Please try again. \n')
                 else:
                     self.exploded = True
+                    game_log(self.name + ' has no more Defuse Cards. And loses')
                     print('Unfortunately you have no more Defuse cards')
             else:
                 if printLog:
                     print(card.name + '\n')
                 self.hand.addCard(card)
+                game_log(self.name + ' adds ' + card.name + ' to their hand')
 
 class LinkedCards():
     def __init__(self,
@@ -193,6 +197,23 @@ class Hand(LinkedCards):
             self.defuses -= 1
         return card
         
+    def removeFirstDefuse(self):
+        if self.defuses == 0:
+            print('No defuses in hand to remove')
+            return
+
+        current = self.head
+        while current.next:
+            if isinstance(current.next, DefuseCard):
+                break
+            else:
+                current = current.next
+        
+        defuseCard = current.next
+        current.next = current.next.next
+        defuseCard.next = None #detach rest of linked cards from card
+        self.defuses -=1 
+        return defuseCard
 
 class DiscardPile(LinkedCards):
     def __init__(self, *args):
@@ -205,17 +226,21 @@ class DiscardPile(LinkedCards):
 
 class DrawPile(LinkedCards):
     def __init__(self, *args):
-        super().__init__(0,8,11,11,11,11,11)
+        super().__init__(0,3,11,11,11,11,11)
         self.create()
 
     def create(self):
 
         def shuffleDeck(deck):
-            print('Draw pile is being shuffled\n')
+            shuffle_print = 'Draw pile is being shuffled\n'
+            print(shuffle_print)
+            game_log(shuffle_print)
             deck.shuffle()
             
         def seeTheFuture(deck):
-            print('Here are the top 3 cards of the draw pile: ' + ' -> '.join(deck.peek()) + '\n')
+            future_print = 'Here are the top 3 cards of the draw pile: ' + ' -> '.join(deck.peek()) + '\n'
+            print(future_print)
+            game_log(future_print)
 
         totalList = []
         totalList += [DefuseCard() for _ in range(self.cardtypesmap['defuse'])]
@@ -283,7 +308,9 @@ class DefuseCard(Card):
     
     def play(self):
         super().play()
-        print('How silly to play this card! Its a useful protection card but you play what you want to play...')
+        defuse_print = 'How silly to play this card! Its a useful protection card but you play what you want to play...'
+        print(defuse_print)
+        game_log(defuse_print)
 
 class CatCard(Card):
     def __init__(self, *args):
@@ -308,6 +335,7 @@ class ExplodingKittensXtremeGame():
         self.playerOne = Player('Player 1', self.draw, self.discard)
         self.playerTwo = Player('Player 2', self.draw, self.discard)
 
+        game_log('Players are drawing cards')
         #players dealt cards
         dealCardsIter = 1
         while dealCardsIter < 25:
@@ -323,11 +351,12 @@ class ExplodingKittensXtremeGame():
         self.askToPlayGame()
 
     def showInstructions(self):
+        game_log('Showing Game instructions')
         print('Welcome to Exploding Kittens EXTREME. Each player will be dealt 25 cards, ensuring you both have exactly 1 Defuse card in your initial hand')
         print('Each player will have a chance to look at their hand before they...')
         print('1. Pass (play no cards)')
         print('2. or Play (following the instructions of a card you take from your hand and add to the Discard Pile')
-        print('End the turn by drawing a card from top of Draw Pile')
+        print('End the turn by drawing a card from top of Draw Pile and selecting \'pass\'')
         print('The last player who has not exploded wins the game')
         print('\n')
     
@@ -336,15 +365,20 @@ class ExplodingKittensXtremeGame():
         print('\n')
     
     def askToPlayGame(self, post='now'):
+        game_log('Users are asked to play game ' + post)
         while True:
             print('Would you like to play the game ' + post + '? Type \'yes\' to play, \'no\' to end, \'instructions\' to read the instructions')
             choice = input('Please enter choice: ')
             if choice == 'yes':
-                print('Game starting...')
+                game_start_print = 'Game starting...'
+                print(game_start_print)
+                game_log(game_start_print)
                 self.loopGame()
                 break
             elif choice == 'no':
-                print('Game ending...')
+                game_end_print = 'Game ending...'
+                print(game_end_print)
+                game_log(game_end_print)
                 break
             elif choice == 'instructions':
                 print('\n')
@@ -354,7 +388,9 @@ class ExplodingKittensXtremeGame():
                 self.invalidInput()
 
     def loopGame(self):
-        print('Cards have been dealt to ' + self.playerOne.name + ' and ' + self.playerTwo.name)
+        cards_dealt_print = 'Cards have been dealt to ' + self.playerOne.name + ' and ' + self.playerTwo.name
+        print(cards_dealt_print)
+        game_log = cards_dealt_print
         print('\n')
 
         while not self.playerOne.exploded and not self.playerTwo.exploded and self.gameOn: 
@@ -362,7 +398,9 @@ class ExplodingKittensXtremeGame():
 
             if self.playerOne.exploded:
                 self.gameOn = False
-                print(self.playerTwo.name + ' wins!')
+                winner_print = self.playerTwo.name + ' wins!'
+                print(winner_print)
+                # game_log(winner_print)
                 print('\n')
                 self.askToPlayGame('again')
                 break
@@ -371,7 +409,9 @@ class ExplodingKittensXtremeGame():
         
         if self.playerTwo.exploded:
             self.gameOn = False
-            print(self.playerOne.name + ' wins!')
+            winner_print = self.playerOne.name + ' wins!'
+            print(winner_print)
+            # game_log(winner_print)
             print('\n')
             self.askToPlayGame('again')
 
