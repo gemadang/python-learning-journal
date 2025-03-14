@@ -372,7 +372,7 @@ class ExplodingKittensXtremeGame():
         if self.playerTwo.exploded:
             self.gameOn = False
             print(self.playerOne.name + ' wins!')
-            print('/n')
+            print('\n')
             self.askToPlayGame('again')
 
 ExplodingKittensXtremeGame()
