@@ -85,13 +85,11 @@ class Player():
 
 class LinkedCards():
     def __init__(self,
-            exploding, defuse, skip, favor, shuffle, future, cat
+            exploding, defuse, shuffle, future, cat
         ):
         self.cardtypesmap = {
             'exploding': exploding,
             'defuse': defuse,
-            'skip': skip,
-            'favor': favor,
             'shuffle': shuffle,
             'future': future,
             'cat': cat
@@ -172,7 +170,6 @@ class Hand(LinkedCards):
     def __init__(self, *args):
         self.head = DefuseCard() #default hand has a defuse card
         self.size = 1
-        self.iditer = 1
         self.defuses = 1
     
     def addCard(self,card):
@@ -217,7 +214,7 @@ class Hand(LinkedCards):
 
 class DiscardPile(LinkedCards):
     def __init__(self, *args):
-        super().__init__(0,0,0,0,0,0,0)
+        super().__init__(0,0,0,0,0)
         self.lastPlayedCard = None
 
     def addCard(self, card):
@@ -226,7 +223,7 @@ class DiscardPile(LinkedCards):
 
 class DrawPile(LinkedCards):
     def __init__(self, *args):
-        super().__init__(0,3,11,11,11,11,11)
+        super().__init__(0,3,10,10,14)
         self.create()
 
     def create(self):

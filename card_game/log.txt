@@ -1,95 +1,261 @@
 Players are drawing cards
+Player 1 adds Shuffle to their hand
+Player 2 adds Cat to their hand
+Player 1 adds See The Future to their hand
+Player 2 adds See The Future to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Shuffle to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Shuffle to their hand
+Player 1 adds Shuffle to their hand
+Player 2 adds Cat to their hand
 Player 1 adds Cat to their hand
 Player 2 adds See The Future to their hand
+Player 1 adds Shuffle to their hand
+Player 2 adds Shuffle to their hand
 Player 1 adds See The Future to their hand
-Player 2 adds Cat to their hand
+Player 2 adds See The Future to their hand
 Player 1 adds Cat to their hand
 Player 2 adds Cat to their hand
-Player 1 adds Cat to their hand
-Player 2 adds Cat to their hand
-Player 1 adds Cat to their hand
+Player 1 adds Shuffle to their hand
 Player 2 adds Shuffle to their hand
 Player 1 adds Cat to their hand
 Player 2 adds Cat to their hand
 Player 1 adds See The Future to their hand
+Player 2 adds See The Future to their hand
+Player 1 adds See The Future to their hand
+Player 2 adds Shuffle to their hand
+Player 1 adds Cat to their hand
+Player 2 adds See The Future to their hand
+Player 1 adds See The Future to their hand
 Player 2 adds Cat to their hand
+Player 1 adds Shuffle to their hand
+Player 2 adds See The Future to their hand
 Player 1 adds Cat to their hand
 Player 2 adds Cat to their hand
+Player 1 adds See The Future to their hand
+Player 2 adds See The Future to their hand
 Player 1 adds Cat to their hand
+Player 2 adds Shuffle to their hand
+Player 1 adds Shuffle to their hand
+Player 2 adds See The Future to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Shuffle to their hand
+Player 2 adds See The Future to their hand
+Player 1 adds See The Future to their hand
+Player 2 adds Cat to their hand
+Player 1 adds See The Future to their hand
+Player 2 adds Shuffle to their hand
+Showing Game instructions
+Users are asked to play game now
+Showing Game instructions
+Game starting...
+Player 1 Turn 1: 
+Player 1 chose to play card
+Player 1 chose to play See The Future and is added to discard pile
+Here are the top 3 cards of the draw pile: See The Future -> Shuffle -> Cat
+
+Player 1 chose to pass and draw card
+Player 1 has drawn a See The Future
+Player 1 adds See The Future to their hand
+Player 2 Turn 1: 
+Player 2 chose to play card
+Player 2 chose to play Shuffle and is added to discard pile
+Draw pile is being shuffled
+
+Player 2 chose to play card
+Player 2 chose to play See The Future and is added to discard pile
+Here are the top 3 cards of the draw pile: Cat -> Defuse -> Cat
+
+Player 2 chose to play card
+Player 2 chose to play Cat and is added to discard pile
+Player 2 chose to pass and draw card
+Player 2 has drawn a Cat
+Player 2 adds Cat to their hand
+Player 1 Turn 2: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Defuse
+Player 1 adds Defuse to their hand
+Player 2 Turn 2: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a Cat
+Player 2 adds Cat to their hand
+Player 1 Turn 3: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
+Player 2 Turn 3: 
+Player 2 chose to play card
+Player 2 chose to play Cat and is added to discard pile
+Player 2 chose to pass and draw card
+Player 2 has drawn a See The Future
+Player 2 adds See The Future to their hand
+Player 1 Turn 4: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
+Player 2 Turn 4: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a Defuse
 Player 2 adds Defuse to their hand
+Player 1 Turn 5: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a See The Future
+Player 1 adds See The Future to their hand
+Player 2 Turn 5: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a See The Future
+Player 2 adds See The Future to their hand
+Player 1 Turn 6: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
+Player 2 Turn 6: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a Cat
+Player 2 adds Cat to their hand
+Player 1 Turn 7: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
+Player 2 Turn 7: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a Defuse
+Player 2 adds Defuse to their hand
+Player 1 Turn 8: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Shuffle
+Player 1 adds Shuffle to their hand
+Player 2 Turn 8: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a See The Future
+Player 2 adds See The Future to their hand
+Player 1 Turn 9: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
+Player 2 Turn 9: 
+Player 2 chose to play card
+Player 2 chose to play See The Future and is added to discard pile
+Here are the top 3 cards of the draw pile: Cat -> Shuffle -> Shuffle
+
+Player 2 chose to pass and draw card
+Player 2 has drawn a Cat
+Player 2 adds Cat to their hand
+Player 1 Turn 10: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Shuffle
+Player 1 adds Shuffle to their hand
+Player 2 Turn 10: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a Shuffle
+Player 2 adds Shuffle to their hand
+Player 1 Turn 11: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
+Player 2 Turn 11: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a Shuffle
+Player 2 adds Shuffle to their hand
+Player 1 Turn 12: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a Shuffle
+Player 1 adds Shuffle to their hand
+Player 2 Turn 12: 
+Player 2 chose to play card
+Player 2 chose to play See The Future and is added to discard pile
+Here are the top 3 cards of the draw pile: Shuffle -> Shuffle -> Cat
+
+Player 2 chose to pass and draw card
+Player 2 has drawn a Shuffle
+Player 2 adds Shuffle to their hand
+Player 1 Turn 13: 
+Players are drawing cards
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
 Player 1 adds Cat to their hand
 Player 2 adds See The Future to their hand
 Player 1 adds Cat to their hand
 Player 2 adds Cat to their hand
 Player 1 adds See The Future to their hand
+Player 2 adds Cat to their hand
+Player 1 adds See The Future to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
 Player 2 adds See The Future to their hand
 Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds See The Future to their hand
+Player 1 adds Shuffle to their hand
 Player 2 adds Shuffle to their hand
 Player 1 adds Cat to their hand
 Player 2 adds Cat to their hand
 Player 1 adds Cat to their hand
 Player 2 adds Shuffle to their hand
-Player 1 adds Cat to their hand
-Player 2 adds Cat to their hand
 Player 1 adds Shuffle to their hand
-Player 2 adds See The Future to their hand
-Player 1 adds Cat to their hand
-Player 2 adds Shuffle to their hand
-Player 1 adds Shuffle to their hand
-Player 2 adds See The Future to their hand
-Player 1 adds Shuffle to their hand
-Player 2 adds Cat to their hand
-Player 1 adds Cat to their hand
-Player 2 adds Cat to their hand
-Player 1 adds Shuffle to their hand
-Player 2 adds Cat to their hand
-Player 1 adds Cat to their hand
 Player 2 adds Cat to their hand
 Player 1 adds Defuse to their hand
-Player 2 adds See The Future to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Shuffle to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Defuse to their hand
+Player 1 adds Shuffle to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Cat to their hand
+Player 1 adds See The Future to their hand
+Player 2 adds Cat to their hand
+Player 1 adds Cat to their hand
+Player 2 adds Shuffle to their hand
 Showing Game instructions
 Users are asked to play game now
 Game starting...
 Player 1 Turn 1: 
 Player 1 chose to pass and draw card
-Player 1 has drawn a Defuse
-Player 1 adds Defuse to their hand
+Player 1 has drawn a Shuffle
+Player 1 adds Shuffle to their hand
 Player 2 Turn 1: 
-Player 2 chose to pass and draw card
-Player 2 has drawn a See The Future
-Player 2 adds See The Future to their hand
-Player 1 Turn 2: 
-Player 1 chose to pass and draw card
-Player 1 has drawn a Cat
-Player 1 adds Cat to their hand
-Player 2 Turn 2: 
 Player 2 chose to pass and draw card
 Player 2 has drawn a Shuffle
 Player 2 adds Shuffle to their hand
+Player 1 Turn 2: 
+Player 1 chose to pass and draw card
+Player 1 has drawn a See The Future
+Player 1 adds See The Future to their hand
+Player 2 Turn 2: 
+Player 2 chose to pass and draw card
+Player 2 has drawn a See The Future
+Player 2 adds See The Future to their hand
 Player 1 Turn 3: 
 Player 1 chose to pass and draw card
-Player 1 has drawn a Exploding Kitten
-Player 1 has 3 Defuse Card(s). And has placed an exploding kitten in position 1 of the draw pile
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
 Player 2 Turn 3: 
 Player 2 chose to pass and draw card
-Player 2 has drawn a Exploding Kitten
-Player 2 has 2 Defuse Card(s). And has placed an exploding kitten in position 1 of the draw pile
+Player 2 has drawn a Cat
+Player 2 adds Cat to their hand
 Player 1 Turn 4: 
 Player 1 chose to pass and draw card
-Player 1 has drawn a Exploding Kitten
-Player 1 has 2 Defuse Card(s). And has placed an exploding kitten in position 1 of the draw pile
+Player 1 has drawn a Cat
+Player 1 adds Cat to their hand
 Player 2 Turn 4: 
-Player 2 chose to play card
-Player 2 chose to play See The Future and is added to discard pile
-Here are the top 3 cards of the draw pile: Exploding Kitten -> Cat -> See The Future
-
 Player 2 chose to pass and draw card
-Player 2 has drawn a Exploding Kitten
-Player 2 has 1 Defuse Card(s). And has placed an exploding kitten in position 1 of the draw pile
+Player 2 has drawn a See The Future
+Player 2 adds See The Future to their hand
 Player 1 Turn 5: 
 Player 1 chose to pass and draw card
 Player 1 has drawn a Exploding Kitten
-Player 1 has no more Defuse Cards. And loses
-Users are asked to play game again
-Showing Game instructions
-Game ending...
