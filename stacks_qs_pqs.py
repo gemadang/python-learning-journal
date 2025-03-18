@@ -27,20 +27,13 @@ class ElevatorRide:
         if not current:
             print('No guests in elevator')
         
-        while current:
+        while current and capacity > 0:
             print(current.data, end=" -> ")
             current = current.next
+            capacity -= 1
 
         print("Null")
-        #empty elevator
-        self.head = None
-
-# elevator = ElevatorRide()
-# elevator.board_guest("Geri")
-# elevator.board_guest("Irfan")
-# elevator.board_guest("Farhana")
-# elevator.board_guest("Sam")
-# elevator.start_ride("Sam")
+        self.head = current
 
 '''
 Part 2: Queue Roller Coaster Ride Simulation
@@ -61,19 +54,21 @@ class RollerCoasterRide:
         if len(self.rollerCoasterQueue) == 0:
             print('No guests in roller coaster')
         
-        for i in self.rollerCoasterQueue:
-            print(i, end=" -> ")
+        i = 0
+
+        while i < len(self.rollerCoasterQueue) and capacity > 0:
+            print(self.rollerCoasterQueue[i], end=" -> ")
+            i += 1
+            capacity -= 1
 
         print("Null")
         #empty rollercoaster
-        self.rollerCoasterQueue = []
+        if i < len(self.rollerCoasterQueue):
+            self.rollerCoasterQueue = self.rollerCoasterQueue[i:]
+        else:
+            self.rollerCoasterQueue = []
  
-rollercoaster = RollerCoasterRide()
-rollercoaster.join_queue("Geri")
-rollercoaster.join_queue("Irfan")
-rollercoaster.join_queue("Farhana")
-rollercoaster.join_queue("Sam")
-rollercoaster.start_ride("Sam")
+
 
 '''
 Part 3: Priority Queue VIP Guest Management
@@ -84,10 +79,47 @@ Use a priority queue to manage guests based on priority levels (e.g., VIP or Fas
 Guests with higher priority board the ride before others.
 
 '''
+import heapq
 class VIPRide:
     def __init__(self):
-        self.j = 0
+        self.heap = []
+        
     def add_guest(self, guest_name, priority): #adds a guest with their priority (lower number indicates higher priority).
-        return
+        heapq.heappush(self.heap, (priority, guest_name))
+
     def start_ride(self, capacity): #simulates the ride, displaying guest names as they board based on priority.
-        return
+        if len(self.heap) == 0:
+            print('No guests in VIPRide')
+        
+        while len(self.heap) > 0 and capacity > 0:
+            vip = heapq.heappop(self.heap)[1]
+            print(vip, end=" -> ")
+            capacity -= 1
+
+        print("Null")
+
+if __name__ == "__main__":
+    print('elevator')
+    elevator = ElevatorRide()
+    elevator.board_guest("Geri")
+    elevator.board_guest("Irfan")
+    elevator.board_guest("Farhana")
+    elevator.board_guest("Sam")
+    elevator.start_ride(3)
+
+    print('rollercoaster')
+    rollercoaster = RollerCoasterRide()
+    rollercoaster.join_queue("Geri")
+    rollercoaster.join_queue("Irfan")
+    rollercoaster.join_queue("Farhana")
+    rollercoaster.join_queue("Sam")
+    rollercoaster.start_ride(4)
+
+    print('vip')
+    vip = VIPRide()
+    vip.add_guest("Geri", 4)
+    vip.add_guest("Irfan", 3)
+    vip.add_guest("Farhana", 4)
+    vip.add_guest("Sam", 3)
+    vip.add_guest("Tofunmi", 5)
+    vip.start_ride(5)
